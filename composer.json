@@ -3,6 +3,6 @@
     "type": "project",
     "require": {
         "php": ">=8.3",
-        "jolicode/castor": "^0.18.3"
+        "jolicode/castor": "^0.17"
     }
 }
