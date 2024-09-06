@@ -1,0 +1,44 @@
+name: Build artifacts
+
+description: Build artifacts for corresponding OS
+
+inputs:
+    repack_os:
+        description: 'The OS to repackage the phar for'
+        required: true
+    compile_os:
+        description: 'The OS to compile the binary for'
+        required: true
+    php:
+        description: 'The PHP version to use'
+        required: true
+
+runs:
+    using: 'composite'
+    steps:
+        -   name: Setup PHP
+            uses: shivammathur/setup-php@v2
+            with:
+                php-version: ${{ inputs.php }}
+                tools: box
+
+        -   run: composer install --prefer-dist
+            shell: bash
+
+        -   name: Build
+            shell: bash
+            run: |
+                ./vendor/bin/castor repack --app-name=test --os=${{ inputs.repack_os }}
+                ./vendor/bin/castor compile --os=${{ inputs.compile_os }}  --binary-path=test.${{ inputs.repack_os }} test.${{ inputs.repack_os }}.phar
+
+        -   name: Upload Phar
+            uses: actions/upload-artifact@v4
+            with:
+                name: test.${{ inputs.repack_os }}.phar
+                path: test.${{ inputs.repack_os }}.phar
+
+        -   name: Upload Binary
+            uses: actions/upload-artifact@v4
+            with:
+                name: test.${{ inputs.repack_os }}
+                path: test.${{ inputs.repack_os }}

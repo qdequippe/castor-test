@@ -1,0 +1,7 @@
+{
+    "name": "qdequippe/castor-test",
+    "type": "project",
+    "require": {
+        "php": ">=8.3"
+    }
+}
