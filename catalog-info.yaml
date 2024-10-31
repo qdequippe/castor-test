@@ -4,7 +4,7 @@ metadata:
   name: castor-test
   annotations:
     github.com/project-slug: qdequippe/castor-test
-    backstage.io/techdocs-ref: value
+    backstage.io/techdocs-ref: dir:.
 spec:
   type: other
   lifecycle: unknown
